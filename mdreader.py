@@ -288,6 +288,7 @@ class Window(Adw.ApplicationWindow):
         self.pending_fragment = ""
         self.expect_load = False
         self.reload_source = 0
+        self.reload_after_load = False
         self.sidebar_decided = False
 
         self._build_ui()
@@ -471,6 +472,9 @@ class Window(Adw.ApplicationWindow):
     def reload(self):
         if not self.file:
             return
+        if self.webview.is_loading():
+            self.reload_after_load = True
+            return
         try:
             body, toc = render(self._read(self.file))
         except (GLib.Error, OSError, subprocess.CalledProcessError):
@@ -609,6 +613,9 @@ class Window(Adw.ApplicationWindow):
             if self.pending_fragment:
                 self._js(f"mdreader.scrollToId({json.dumps(self.pending_fragment)}, false)")
                 self.pending_fragment = ""
+            if self.reload_after_load:
+                self.reload_after_load = False
+                self.reload()
             if not self.search_bar.get_search_mode():
                 self.webview.grab_focus()
 
