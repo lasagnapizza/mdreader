@@ -1,0 +1,15 @@
+pkgname=normal-md-reader
+pkgver=@VERSION@
+pkgrel=1
+pkgdesc="Read-only Markdown viewer for GNOME"
+arch=(any)
+url="https://github.com/@REPO@"
+license=(MIT)
+depends=(python python-gobject gtk4 libadwaita webkitgtk-6.0 python-pygments cmark-gfm)
+source=("$pkgname-$pkgver.tar.gz::$url/releases/download/v$pkgver/$pkgname-$pkgver.tar.gz")
+sha256sums=('@SHA256@')
+
+package() {
+  cd "$pkgname-$pkgver"
+  make DESTDIR="$pkgdir" PREFIX=/usr install
+}
