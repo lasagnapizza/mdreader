@@ -509,7 +509,8 @@ class Window(Adw.ApplicationWindow):
         self._js("mdreader.setTheme(false, getComputedStyle(document.documentElement).getPropertyValue('--accent'))")
         operation = WebKit.PrintOperation.new(self.webview)
         operation.connect("finished", lambda _o: self._apply_theme())
-        operation.run_dialog(self)
+        if operation.run_dialog(self) == WebKit.PrintOperationResponse.CANCEL:
+            self._apply_theme()
 
     @staticmethod
     def _read(file):
