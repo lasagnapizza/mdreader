@@ -1,25 +1,45 @@
-# Markdown Reader
+# <img src="io.normal.MdReader.svg" width="40" align="top" alt=""> Markdown Reader
 
-Read-only Markdown viewer for GNOME. GTK4 + libadwaita + WebKitGTK, GitHub-flavored rendering via `cmark-gfm`.
+A Markdown viewer for GNOME. Not an editor. You open a `.md`, you read it.
+
+<p>
+  <img src="screenshots/light.png" width="49%" alt="This README, open in Markdown Reader">
+  <img src="screenshots/dark.png" width="49%" alt="This README, open in Markdown Reader, dark">
+</p>
+
+- Renders like GitHub: tables, task lists, footnotes, alerts, highlighted code
+- Reloads by itself when the file changes
+- Contents sidebar, find, zoom, print
+- Follows GNOME's dark mode and accent color
+- `mdreader file.md` gives your terminal back right away
 
 ## Install
 
+Arch, from a checkout:
+
 ```sh
-makepkg -si          # system-wide, as a pacman package
-# or
-make install         # ~/.local, no root
-make default         # optional: make it the default app for .md
+makepkg -si
+```
+
+Or download the `.pkg.tar.zst` from [Releases](../../releases) and `sudo pacman -U` it.
+Without a package: `make install` puts it in `~/.local`.
+
+To open `.md` files with it by default:
+
+```sh
+make default
 ```
 
 ## Keys
 
-| Key | Action |
-| --- | --- |
-| Ctrl+O | Open |
-| Ctrl+F | Find (Enter / Shift+Enter: next / previous) |
-| F9 | Contents sidebar |
-| Alt+Left | Back (after following a link to another `.md`) |
-| Ctrl+R, F5 | Reload (also automatic on save) |
-| Ctrl+P | Print / PDF |
-| Ctrl+= / Ctrl+- / Ctrl+0 | Zoom |
-| Ctrl+N / Ctrl+W / Ctrl+Q | New window / close / quit |
+<kbd>Ctrl</kbd>+<kbd>O</kbd> open ·
+<kbd>Ctrl</kbd>+<kbd>F</kbd> find ·
+<kbd>F9</kbd> contents ·
+<kbd>Alt</kbd>+<kbd>←</kbd> back ·
+<kbd>Ctrl</kbd>+<kbd>P</kbd> print ·
+<kbd>Ctrl</kbd>+<kbd>+</kbd>/<kbd>-</kbd>/<kbd>0</kbd> zoom
+
+## Releasing
+
+Bump `VERSION` in `mdreader.py` and `pkgver` in `PKGBUILD`, then push a `v<version>` tag.
+CI builds the package and publishes the release.
