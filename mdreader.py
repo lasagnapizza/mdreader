@@ -210,7 +210,8 @@ PAGE_JS = r"""
   function spy() {
     const headings = document.querySelectorAll("#content :is(h1,h2,h3,h4,h5,h6)[id]");
     let id = null;
-    if (headings.length && innerHeight + scrollY >= document.documentElement.scrollHeight - 2) {
+    const scrollable = document.documentElement.scrollHeight > innerHeight + 2;
+    if (headings.length && scrollable && innerHeight + scrollY >= document.documentElement.scrollHeight - 2) {
       id = headings[headings.length - 1].id;
     } else {
       for (const h of headings) {
