@@ -19,7 +19,6 @@ jobs:
         with:
           name: dist
           path: dist/
-          include-hidden-files: true
 
   release:
     needs: build
@@ -37,5 +36,4 @@ jobs:
         run: |
           gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" \
             --title "$GITHUB_REF_NAME" --generate-notes --verify-tag \
-            dist/*.tar.gz dist/*.pkg.tar.zst dist/SHA256SUMS \
-            dist/aur/PKGBUILD dist/aur/.SRCINFO
+            dist/*.tar.gz dist/*.pkg.tar.zst dist/SHA256SUMS

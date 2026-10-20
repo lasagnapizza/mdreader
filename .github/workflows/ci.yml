@@ -20,4 +20,3 @@ jobs:
         with:
           name: dist
           path: dist/
-          include-hidden-files: true

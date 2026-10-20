@@ -37,9 +37,11 @@ sed -e "s|@VERSION@|$version|" \
 cp "$tarball" "$work/aur/"
 chown -R builder "$work/aur"
 su builder -c "cd '$work/aur' && makepkg -f && makepkg --printsrcinfo > .SRCINFO"
-mkdir dist/aur
-cp "$work/aur/PKGBUILD" "$work/aur/.SRCINFO" dist/aur/
+# Both AUR files in one archive, unpacking to a mdreader/ folder like the AUR repo.
+mkdir "$work/aur-repo"
+cp "$work/aur/PKGBUILD" "$work/aur/.SRCINFO" "$work/aur-repo/"
+tar -C "$work" --transform 's,^aur-repo,mdreader,' -cf - aur-repo | gzip -n > "dist/$name-aur.tar.gz"
 
 cd dist
-sha256sum "$name.tar.gz" ./*.pkg.tar.zst | sed 's| \./| |' > SHA256SUMS
+sha256sum "$name.tar.gz" "$name-aur.tar.gz" ./*.pkg.tar.zst | sed 's| \./| |' > SHA256SUMS
 cat SHA256SUMS
