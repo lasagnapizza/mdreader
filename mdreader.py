@@ -590,7 +590,8 @@ class Window(Adw.ApplicationWindow):
                 return True
 
         decision.ignore()
-        self._follow(uri)
+        if action.is_user_gesture():  # never let markup (meta refresh etc.) launch things
+            self._follow(uri)
         return True
 
     def _on_load_changed(self, _view, event):
