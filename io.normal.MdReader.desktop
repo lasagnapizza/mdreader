@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Markdown Reader
+Comment=Read Markdown files
+Exec=mdreader %U
+Icon=io.normal.MdReader
+Terminal=false
+Categories=GNOME;GTK;Office;Viewer;
+MimeType=text/markdown;text/x-markdown;
+Keywords=markdown;md;readme;viewer;
+StartupNotify=true
