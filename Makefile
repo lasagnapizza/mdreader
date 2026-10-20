@@ -1,7 +1,7 @@
 PREFIX ?= $(HOME)/.local
 APP_ID = io.normal.MdReader
 VERSION := $(shell sed -n 's/^VERSION = "\(.*\)"/\1/p' mdreader.py)
-DIST = normal-md-reader-$(VERSION)
+DIST = mdreader-$(VERSION)
 DIST_FILES = mdreader.py $(APP_ID).desktop $(APP_ID).svg Makefile PKGBUILD README.md $(wildcard LICENSE)
 SOURCE_DATE_EPOCH ?= $(shell git log -1 --format=%ct 2>/dev/null || echo 0)
 

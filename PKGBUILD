@@ -1,4 +1,4 @@
-pkgname=normal-md-reader
+pkgname=mdreader
 pkgver=0.1.0
 pkgrel=1
 pkgdesc="Read-only Markdown viewer for GNOME"

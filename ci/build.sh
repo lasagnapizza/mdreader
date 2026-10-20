@@ -17,7 +17,7 @@ make check
 rm -rf dist
 make dist
 
-name=normal-md-reader-$version
+name=mdreader-$version
 tarball=$PWD/dist/$name.tar.gz
 id builder >/dev/null 2>&1 || useradd -m builder
 work=$(mktemp -d)
@@ -31,7 +31,7 @@ cp "$work/$name"/*.pkg.tar.zst dist/
 # place, so building it here also verifies the checksum.
 mkdir "$work/aur"
 sed -e "s|@VERSION@|$version|" \
-    -e "s|@REPO@|${GITHUB_REPOSITORY:-OWNER/normal-md-reader}|" \
+    -e "s|@REPO@|${GITHUB_REPOSITORY:-OWNER/mdreader}|" \
     -e "s|@SHA256@|$(sha256sum "$tarball" | cut -d' ' -f1)|" \
     packaging/aur/PKGBUILD.in > "$work/aur/PKGBUILD"
 cp "$tarball" "$work/aur/"
