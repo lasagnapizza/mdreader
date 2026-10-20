@@ -86,7 +86,15 @@ def render(text):
     body = CODE_RE.sub(_highlight_block, body)
     body = ALERT_RE.sub(_alert, body)
 
-    toc, seen = [], {}
+    toc, used = [], set(ID_ATTR_RE.findall(body))
+
+    def unique(base):
+        hid, n = base, 0
+        while hid in used:
+            n += 1
+            hid = f"{base}-{n}"
+        used.add(hid)
+        return hid
 
     def heading(m):
         level, attrs, inner = int(m.group(1)), m.group(2) or "", m.group(3)
@@ -95,10 +103,7 @@ def render(text):
         if existing:
             hid = existing.group(1)
         else:
-            base = slugify(title) or "section"
-            n = seen.get(base, 0)
-            seen[base] = n + 1
-            hid = base if n == 0 else f"{base}-{n}"
+            hid = unique(slugify(title) or "section")
             attrs += f' id="{hid}"'
         if title:
             toc.append((level, title, hid))
