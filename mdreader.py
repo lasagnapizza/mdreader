@@ -36,7 +36,7 @@ CMARK = ["cmark-gfm", "--unsafe", "--validate-utf8",
          "-e", "table", "-e", "strikethrough", "-e", "autolink",
          "-e", "tasklist", "-e", "tagfilter", "-e", "footnotes"]
 
-FRONT_MATTER_RE = re.compile(r"\A---[ \t]*\r?\n(.*?)^(?:---|\.\.\.)[ \t]*(?:\r?\n|\Z)", re.S | re.M)
+FRONT_MATTER_RE = re.compile(r"\A---[ \t]*\r?\n(?=[\w\"'-][^\r\n]*:)(.*?)^(?:---|\.\.\.)[ \t]*(?:\r?\n|\Z)", re.S | re.M)
 CODE_RE = re.compile(r'<pre><code class="language-([^"]+)">(.*?)</code></pre>', re.S)
 HEADING_RE = re.compile(r"<h([1-6])(\s[^>]*)?>(.*?)</h\1>", re.S | re.I)
 ID_ATTR_RE = re.compile(r'\sid="([^"]*)"')
