@@ -774,7 +774,16 @@ class App(Adw.Application):
 def main():
     if not shutil.which("cmark-gfm"):
         sys.exit("mdreader: cmark-gfm not found (pacman -S cmark-gfm)")
-    return App().run(sys.argv)
+    args = sys.argv[1:]
+    if "--foreground" in args:
+        args.remove("--foreground")
+    elif sys.stdin.isatty() and not any(arg.startswith("-") for arg in args):
+        # Started from a terminal: give it back right away, like `zed` or `code`.
+        subprocess.Popen([sys.executable, os.path.abspath(__file__), "--foreground", *args],
+                         start_new_session=True, stdin=subprocess.DEVNULL,
+                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        return 0
+    return App().run([sys.argv[0], *args])
 
 
 if __name__ == "__main__":
