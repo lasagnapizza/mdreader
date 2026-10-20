@@ -439,7 +439,7 @@ class Window(Adw.ApplicationWindow):
             body, toc = render(self._read(file))
         except (GLib.Error, OSError, subprocess.CalledProcessError):
             self._toast(f"Couldn’t open “{file.get_basename()}”")
-            return
+            return False
         if remember and self.file:
             self.history.append(self.file)
         self.file = file
@@ -466,6 +466,7 @@ class Window(Adw.ApplicationWindow):
             self.sidebar_decided = True
             self.split.set_show_sidebar(len(toc) > 2 and not self.split.get_collapsed())
         self._update_actions()
+        return True
 
     def reload(self):
         if not self.file:
@@ -478,8 +479,8 @@ class Window(Adw.ApplicationWindow):
         self._js(f"mdreader.setContent({json.dumps(body)})")
 
     def go_back(self):
-        if self.history:
-            self.open_file(self.history.pop())
+        if self.history and self.open_file(self.history[-1]):
+            self.history.pop()
             self._update_actions()
 
     def choose_file(self):
