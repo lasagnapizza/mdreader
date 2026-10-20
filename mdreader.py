@@ -32,6 +32,7 @@ MD_SUFFIXES = (".md", ".markdown", ".mdown", ".mkd", ".mkdn", ".mdwn", ".mdtxt",
 
 # Raw HTML is allowed (READMEs rely on it); tagfilter strips <script>, <style>,
 # <iframe> and friends, and the web view never runs scripts from markup.
+# Remote images and stylesheets in a document still load when it is opened.
 CMARK = ["cmark-gfm", "--unsafe", "--validate-utf8",
          "-e", "table", "-e", "strikethrough", "-e", "autolink",
          "-e", "tasklist", "-e", "tagfilter", "-e", "footnotes"]
