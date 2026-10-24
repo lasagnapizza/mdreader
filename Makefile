@@ -7,7 +7,9 @@ SOURCE_DATE_EPOCH ?= $(shell git log -1 --format=%ct 2>/dev/null || echo 0)
 
 install:
 	install -Dm755 mdreader.py $(DESTDIR)$(PREFIX)/bin/mdreader
-	install -Dm644 $(APP_ID).desktop $(DESTDIR)$(PREFIX)/share/applications/$(APP_ID).desktop
+	install -d $(DESTDIR)$(PREFIX)/share/applications
+	sed 's,^Exec=mdreader ,Exec=$(PREFIX)/bin/mdreader ,' $(APP_ID).desktop > $(DESTDIR)$(PREFIX)/share/applications/$(APP_ID).desktop
+	chmod 644 $(DESTDIR)$(PREFIX)/share/applications/$(APP_ID).desktop
 	install -Dm644 $(APP_ID).svg $(DESTDIR)$(PREFIX)/share/icons/hicolor/scalable/apps/$(APP_ID).svg
 	@if [ -z "$(DESTDIR)" ]; then update-desktop-database -q $(PREFIX)/share/applications || true; fi
 
